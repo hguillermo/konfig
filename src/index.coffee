@@ -16,7 +16,8 @@ extensions =
 
 load_config = (opts) ->
   configs = {}
-  dir = path.resolve(process.cwd(), opts.path)
+  # The config load should be relative to the script that is running and not to the directory where you are running the script.
+  dir = path.resolve(__dirname, '../../..', opts.path);
   load_files(dir).forEach (file) ->
     config = extensions[file.extension].parse(file.content)
     configs[file.name] = get_environment(config)
